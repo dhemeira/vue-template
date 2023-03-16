@@ -1,12 +1,12 @@
 <template>
-  <div class="hero">
-    <div class="hero-content text-center">
+  <main class="hero">
+    <div class="hero-content text-center max-w-full break-words">
       <div>
-        <h1 class="text-7xl font-bold">{{ settings.APP_NAME }}</h1>
-        <h2 class="text-xl py-6">Az oldal átalakítás alatt!</h2>
+        <h1 class="font-bold">{{ settings.APP_NAME }}</h1>
+        <h2 class="text-xl py-6">This is a template!</h2>
       </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -19,3 +19,15 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+h1 {
+  font-size: clamp(2rem, 1.286rem + 3.571vw, 4.5rem);
+  line-height: 1;
+}
+
+h2 {
+  font-size: clamp(1.125rem, 1.089rem + 0.179vw, 1.25rem);
+  line-height: 1.75rem;
+}
+</style>

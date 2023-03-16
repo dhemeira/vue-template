@@ -1,32 +1,20 @@
 <template>
-  <header>
-    <nav>
-      <div class="navbar bg-base-100">
-        <div class="flex-1">
-          <RouterLink class="btn btn-ghost normal-case text-xl" to="/">{{
-            settings.APP_NAME
-          }}</RouterLink>
-        </div>
-        <div class="flex-none">
-          <ul class="menu menu-horizontal px-1 gap-1">
-            <li><RouterLink to="/">Kezdőlap</RouterLink></li>
-            <li><RouterLink to="/404">404</RouterLink></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </header>
-  <RouterView :style="'min-height: calc(100vh - ' + headerHeight + 'px)'" class="bg-base-200" />
+  <NavBar v-model.navbarHeight="navbarHeight" />
+  <RouterView :style="'min-height: calc(100vh - ' + navbarHeight + 'px)'" class="bg-base-200" />
 </template>
 
 <script>
-import appsettings from './appsettings.json';
+import appsettings from '@/appsettings.json';
+import NavBar from '@/components/NavBar.vue';
 export default {
   data() {
     return {
-      headerHeight: 0,
+      navbarHeight: 0,
       settings: appsettings,
     };
+  },
+  components: {
+    NavBar,
   },
   name: 'App',
   watch: {
@@ -37,18 +25,5 @@ export default {
       immediate: true,
     },
   },
-  mounted() {
-    this.headerHeight = document.querySelector('header').offsetHeight;
-  },
 };
 </script>
-
-<style lang="css" scoped>
-.router-link-exact-active {
-  @apply active;
-}
-
-.navbar .menu li {
-  @apply uppercase font-semibold;
-}
-</style>

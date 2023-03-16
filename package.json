@@ -11,8 +11,6 @@
     "commit": "cz"
   },
   "dependencies": {
-    "@headlessui/vue": "^1.7.12",
-    "@heroicons/vue": "^2.0.16",
     "commitizen": "^4.3.0",
     "daisyui": "^2.51.3",
     "vue": "^3.2.47",

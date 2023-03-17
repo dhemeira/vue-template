@@ -9,7 +9,7 @@
   </main>
 </template>
 
-<script>
+<script lang="js">
 import appsettings from '@/appsettings.json';
 export default {
   data() {

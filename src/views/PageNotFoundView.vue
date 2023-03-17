@@ -4,11 +4,11 @@
   >
     <p class="text-center font-extrabold text-9xl lg:text-[14em]">404</p>
     <div class="text-center lg:text-left w-96 max-w-full">
-      <h1 class="my-2 font-bold text-2xl">Ez az oldal nem található</h1>
+      <h1 class="my-2 font-bold text-2xl">This page is not found</h1>
       <p class="my-2 w-96 max-w-[100%]">
-        Elnézésedet kérjük! Látogasd meg a kezdőlapot, hogy megtaláld amit keresel.
+        Sorry about that! Please visit our hompage to get where you need to go.
       </p>
-      <router-link class="btn btn-primary w-full font-bold" to="/">Vissza a Kezdőlapra</router-link>
+      <router-link class="btn btn-primary w-full font-bold" to="/">Back to Homepage</router-link>
     </div>
   </main>
 </template>

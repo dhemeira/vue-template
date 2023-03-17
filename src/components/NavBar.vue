@@ -93,6 +93,10 @@ export default {
     menuOpen: {
       handler(to, from) {
         document.querySelector('body').style.overflow = this.menuOpen ? 'hidden' : 'auto';
+        const mainDiv = document.querySelector('main');
+        if (mainDiv != null) mainDiv.style.pointerEvents = this.menuOpen ? 'none' : 'initial';
+        if (this.menuOpen) document.querySelector('body').classList.add('overlay');
+        else document.querySelector('body').classList.remove('overlay');
       },
       immediate: true,
     },
@@ -141,5 +145,22 @@ export default {
 }
 .minmaxclamp:hover .scroller {
   overflow-y: auto;
+}
+
+.minmaxclamp {
+  -webkit-backdrop-filter: grayscale(1);
+  backdrop-filter: grayscale(1);
+}
+</style>
+<style>
+body.overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65));
+  opacity: 0.6;
 }
 </style>

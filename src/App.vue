@@ -15,6 +15,7 @@
 <script>
 import appsettings from '@/appsettings.json';
 import NavBar from '@/components/NavBar.vue';
+import _ from 'lodash';
 export default {
   data() {
     return {

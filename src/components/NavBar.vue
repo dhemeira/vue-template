@@ -30,9 +30,9 @@
               leave-to-class="transform scale-95 opacity-0"
             >
               <MenuItems
-                class="fixed z-[99999] left-0 h-screen top-0 minmaxclamp origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                class="max-h-screen fixed z-[99999] left-0 h-screen top-0 minmaxclamp origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
               >
-                <div class="flex flex-col absolute right-2 top-0">
+                <div class="flex flex-col h-11">
                   <button
                     class="group inline-block self-end items-center rounded-md text-sm font-semibold px-2 py-2 text-gray-900"
                     @click="close()"
@@ -40,10 +40,10 @@
                     <XMarkIcon class="h-7 w-7" aria-hidden="true" />
                   </button>
                 </div>
-                <div class="px-1 py-1 overflow-y-hidden hover:overflow-y-auto max-h-screen">
+                <div class="px-1 py-1 scroller" style="max-height: calc(100% - 45px)">
                   <MenuItem>
                     <router-link
-                      class="hamburger-menu-items group flex w-full items-center rounded-md text-sm font-semibold mt-10"
+                      class="hamburger-menu-items group flex w-full items-center rounded-md text-sm font-semibold"
                       to="/"
                     >
                       <span class="w-full pl-6 pr-2 py-2" @click="close()" role="link">Home</span>
@@ -134,5 +134,12 @@ export default {
   --tw-border-opacity: 0;
   background-color: hsl(var(--bc) / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+}
+
+.minmaxclamp .scroller {
+  overflow-y: hidden;
+}
+.minmaxclamp:hover .scroller {
+  overflow-y: auto;
 }
 </style>

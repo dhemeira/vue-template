@@ -40,7 +40,7 @@
                     <XMarkIcon class="h-7 w-7" aria-hidden="true" />
                   </button>
                 </div>
-                <div class="px-1 py-1 overflow-y-auto max-h-screen">
+                <div class="px-1 py-1 overflow-y-hidden hover:overflow-y-auto max-h-screen">
                   <MenuItem>
                     <router-link
                       class="hamburger-menu-items group flex w-full items-center rounded-md text-sm font-semibold mt-10"

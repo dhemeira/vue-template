@@ -9,7 +9,7 @@
         </div>
         <div class="flex-none">
           <ul id="nav-menu" class="menu menu-horizontal px-1 gap-1">
-            <li><RouterLink to="/">Kezdőlap</RouterLink></li>
+            <li><RouterLink to="/">Home</RouterLink></li>
             <li><RouterLink to="/404">404</RouterLink></li>
           </ul>
 
@@ -46,9 +46,7 @@
                       class="hamburger-menu-items group flex w-full items-center rounded-md text-sm font-semibold mt-10"
                       to="/"
                     >
-                      <span class="w-full pl-6 pr-2 py-2" @click="close()" role="link"
-                        >Kezdőlap</span
-                      >
+                      <span class="w-full pl-6 pr-2 py-2" @click="close()" role="link">Home</span>
                     </router-link>
                   </MenuItem>
                   <MenuItem>

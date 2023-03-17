@@ -1,6 +1,15 @@
 <template>
   <NavBar v-model.navbarHeight="navbarHeight" />
-  <RouterView :style="'min-height: calc(100vh - ' + navbarHeight + 'px)'" class="bg-base-200" />
+  <RouterView
+    :style="
+      'min-height: calc(100vh - ' +
+      navbarHeight +
+      'px); min-height: calc(var(--vh, 1vh) * 100 - ' +
+      navbarHeight +
+      'px);'
+    "
+    class="bg-base-200"
+  />
 </template>
 
 <script>
@@ -24,6 +33,18 @@ export default {
       },
       immediate: true,
     },
+  },
+  mounted() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    _.debo;
+    window.addEventListener(
+      'resize',
+      _.debounce(() => {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+      }, 250)
+    );
   },
 };
 </script>

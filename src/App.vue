@@ -1,10 +1,15 @@
 <template>
   <MainNavbar v-model.navbarHeight="navbarHeight" :sticky="this.settings.NAVBAR_STICKY" />
-  <RouterView
-    :style="'min-height: calc(100vh - ' + navbarHeight + 'px - ' + footerHeight + 'px);'"
-    class="bg-base-200"
-  />
-  <MainFooter v-model.footerHeight="footerHeight" href="https://github.com/dhemeira/vue-template" />
+  <div class="wrapper" :style="'height: calc(100vh - ' + navbarHeight + 'px);'">
+    <RouterView
+      :style="'min-height: calc(100vh - ' + navbarHeight + 'px - ' + footerHeight + 'px);'"
+      class="bg-base-200"
+    />
+    <MainFooter
+      v-model.footerHeight="footerHeight"
+      href="https://github.com/dhemeira/vue-template"
+    />
+  </div>
 </template>
 
 <script>
@@ -27,7 +32,7 @@ export default {
   name: 'App',
   watch: {
     $route: {
-      handler(to, from) {
+      handler(to) {
         document.title = (to.meta.title ?? this.settings.APP_NAME) + ' | ' + this.settings.APP_NAME;
       },
       immediate: true,
@@ -47,6 +52,15 @@ export default {
 };
 </script>
 <style>
+:root {
+  --scrollbar-color: #00000000;
+}
+
+*:hover,
+*:focus,
+*:focus-within {
+  --scrollbar-color: #b2b8bb !important;
+}
 ::-webkit-scrollbar {
   width: 20px;
 }
@@ -54,12 +68,12 @@ export default {
   background-color: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #d6dee1;
+  background-color: var(--scrollbar-color);
   border-radius: 20px;
   border: 6px solid transparent;
   background-clip: content-box;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #a8bbbf;
+  background-color: rgb(105, 117, 119);
 }
 </style>

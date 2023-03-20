@@ -9,12 +9,15 @@
         </div>
         <div class="flex-none">
           <ul id="nav-menu" class="menu menu-horizontal px-1 gap-1">
-            <li><RouterLink to="/">Home</RouterLink></li>
-            <li><RouterLink to="/404">404</RouterLink></li>
+            <li v-for="menuItem in menuItems">
+              <RouterLink :to="menuItem.url">{{ menuItem.name }}</RouterLink>
+            </li>
           </ul>
 
           <Menu as="div" class="sm:hidden inline-block text-left" v-slot="{ open, close }">
-            <MenuButton class="inline-flex w-full justify-center rounded-[1.9rem] btn btn-ghost">
+            <MenuButton
+              class="inline-flex w-full px-2 justify-center rounded-[1.9rem] btn btn-ghost"
+            >
               <label :class="['swap swap-rotate', open ? 'swap-active' : '']">
                 <Bars3Icon class="h-8 w-8 swap-off fill-current" aria-hidden="true" />
                 <XMarkIcon class="h-8 w-8 swap-on fill-current" aria-hidden="true" />
@@ -42,20 +45,14 @@
                   </button>
                 </div>
                 <div class="px-1 py-1 scroller" style="max-height: calc(100% - 45px)">
-                  <MenuItem>
+                  <MenuItem v-for="menuItem in menuItems">
                     <router-link
-                      class="hamburger-menu-items group flex w-full items-center rounded-md text-sm font-semibold"
-                      to="/"
+                      class="hamburger-menu-items group flex items-center rounded-md text-sm font-semibold mt-1 mr-6"
+                      :to="menuItem.url"
                     >
-                      <span class="w-full pl-6 pr-2 py-2" @click="close()" role="link">Home</span>
-                    </router-link>
-                  </MenuItem>
-                  <MenuItem>
-                    <router-link
-                      class="hamburger-menu-items group flex w-full items-center rounded-md text-sm font-semibold mt-1"
-                      to="/404"
-                    >
-                      <span class="w-full pl-6 pr-2 py-2" @click="close()" role="link">404</span>
+                      <span class="w-full pl-6 pr-2 py-2" @click="close()" role="link">{{
+                        menuItem.name
+                      }}</span>
                     </router-link>
                   </MenuItem>
                 </div>
@@ -77,6 +74,10 @@ export default {
     return {
       settings: appsettings,
       menuOpen: null,
+      menuItems: [
+        { url: '/', name: 'Home' },
+        { url: '/404', name: '404' },
+      ],
     };
   },
   components: {
@@ -93,13 +94,17 @@ export default {
   },
   watch: {
     menuOpen: {
-      handler(to, from) {
-        document.querySelector('body').style.overflow = this.menuOpen ? 'hidden' : 'auto';
-        const mainDiv = document.querySelector('main');
+      handler() {
+        const mainDiv = document.querySelector('.wrapper');
         if (mainDiv != null) {
+          mainDiv.style.overflow = this.menuOpen
+            ? 'hidden'
+            : window.CSS.supports('overflow', 'overlay')
+            ? 'overlay'
+            : 'auto';
           mainDiv.style.pointerEvents = this.menuOpen ? 'none' : 'initial';
-          if (this.menuOpen) document.querySelector('main').classList.add('overlay');
-          else document.querySelector('main').classList.remove('overlay');
+          if (this.menuOpen) mainDiv.classList.add('overlay');
+          else mainDiv.classList.remove('overlay');
         }
       },
       immediate: true,
@@ -143,12 +148,13 @@ export default {
   background-color: hsl(var(--bc) / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
 }
-
 .minmaxclamp .scroller {
-  overflow-y: hidden;
-}
-.minmaxclamp:hover .scroller {
   overflow-y: auto;
+}
+@supports (overflow: overlay) {
+  .minmaxclamp .scroller {
+    overflow-y: overlay;
+  }
 }
 
 .minmaxclamp {
@@ -157,8 +163,19 @@ export default {
 }
 </style>
 <style>
-main.overlay {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-  opacity: 0.8;
+body {
+  overflow: hidden;
+}
+.wrapper {
+  overflow-x: hidden;
+}
+@supports (overflow: overlay) {
+  .wrapper {
+    overflow-y: overlay;
+  }
+}
+
+.wrapper.overlay {
+  opacity: 0.6;
 }
 </style>

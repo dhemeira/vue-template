@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer items-center p-4 bg-neutral text-neutral-content grid-flow-col">
+  <footer class="footer items-center p-4 bg-neutral text-neutral-content grid-flow-col px-6">
     <div class="items-center grid-flow-col gap-4">
       <IconHashtag />
       <p><slot>Made by Dhemeira</slot></p>

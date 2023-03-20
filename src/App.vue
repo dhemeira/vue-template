@@ -10,11 +10,13 @@
     "
     class="bg-base-200"
   />
+  <MainFooter href="https://github.com/dhemeira/vue-template" />
 </template>
 
 <script>
 import appsettings from '@/appsettings.json';
 import MainNavbar from '@/components/MainNavbar.vue';
+import MainFooter from '@/components/MainFooter.vue';
 import _ from 'lodash';
 export default {
   data() {
@@ -25,6 +27,7 @@ export default {
   },
   components: {
     MainNavbar,
+    MainFooter,
   },
   name: 'App',
   watch: {

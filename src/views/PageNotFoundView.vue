@@ -8,16 +8,17 @@
       <p class="my-2 w-96 max-w-[100%]">
         Sorry about that! Please visit our hompage to get where you need to go.
       </p>
-      <router-link class="btn btn-primary w-full font-bold" to="/">Back to Homepage</router-link>
+      <LinkShadow to="/">Back to Homepage</LinkShadow>
     </div>
   </main>
 </template>
-
+<script>
+import LinkShadow from '../components/LinkShadow.vue';
+export default {
+  components: { LinkShadow },
+};
+</script>
 <style scoped>
-.btn {
-  transition: all 200ms ease-in-out;
-  box-shadow: 2px 5px 0 0 black;
-}
 .font-extrabold {
   font-size: clamp(6.5rem, 4.357rem + 10.714vw, 14rem);
 }
@@ -26,10 +27,5 @@ h1 {
 }
 p:not(.font-extrabold) {
   font-size: clamp(0.875rem, 0.839rem + 0.179vw, 1rem);
-}
-.btn:hover,
-.btn:active {
-  transform: translateY(4px) translateX(2px);
-  box-shadow: 0 0 0 0 black;
 }
 </style>

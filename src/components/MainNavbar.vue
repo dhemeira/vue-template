@@ -34,15 +34,12 @@
               leave-to-class="transform scale-95 opacity-0"
             >
               <MenuItems
-                class="max-h-screen fixed z-[99999] left-0 h-screen top-0 minmaxclamp origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                class="max-h-full fixed z-[99999] left-0 h-full top-0 minmaxclamp origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
               >
-                <div class="flex flex-col h-11">
-                  <button
-                    class="group inline-block self-end items-center rounded-md text-sm font-semibold px-2 py-2 text-gray-900"
-                    @click="close()"
-                  >
-                    <XMarkIcon class="h-7 w-7" aria-hidden="true" />
-                  </button>
+                <div
+                  class="flex flex-col h-16 text-base items-start pl-5 justify-center font-semibold"
+                >
+                  {{ settings.APP_NAME }}
                 </div>
                 <div class="px-1 py-1 scroller" style="max-height: calc(100% - 45px)">
                   <MenuItem v-for="menuItem in menuItems">
@@ -50,7 +47,7 @@
                       class="hamburger-menu-items group flex items-center rounded-md text-sm font-semibold mt-1 mr-6"
                       :to="menuItem.url"
                     >
-                      <span class="w-full pl-6 pr-2 py-2" @click="close()" role="link">{{
+                      <span class="w-full pl-6 pr-6 py-2" @click="close()" role="link">{{
                         menuItem.name
                       }}</span>
                     </router-link>
@@ -131,7 +128,7 @@ export default {
   }
 }
 .minmaxclamp {
-  width: 66vw;
+  width: calc(100% - 64px - 25px);
   max-width: 100vw;
   min-width: fit-content;
 }

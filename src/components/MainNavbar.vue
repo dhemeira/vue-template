@@ -14,12 +14,13 @@
           </ul>
 
           <Menu as="div" class="sm:hidden inline-block text-left" v-slot="{ open, close }">
-            <div>
-              <MenuButton class="inline-flex w-full justify-center rounded-[1.9rem] btn btn-ghost">
-                {{ (menuOpen = open) == null ? '' : '' }}
-                <Bars3Icon class="h-7 w-7" aria-hidden="true" />
-              </MenuButton>
-            </div>
+            <MenuButton class="inline-flex w-full justify-center rounded-[1.9rem] btn btn-ghost">
+              <label :class="['swap swap-rotate', open ? 'swap-active' : '']">
+                <Bars3Icon class="h-8 w-8 swap-off fill-current" aria-hidden="true" />
+                <XMarkIcon class="h-8 w-8 swap-on fill-current" aria-hidden="true" />
+              </label>
+              {{ (menuOpen = open) == null ? '' : '' }}
+            </MenuButton>
 
             <transition
               enter-active-class="transition duration-100 ease-out"

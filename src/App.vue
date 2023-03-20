@@ -1,15 +1,17 @@
 <template>
-  <NavBar v-model.navbarHeight="navbarHeight" :sticky="this.settings.NAVBAR_STICKY" />
-  <RouterView
-    :style="
-      'min-height: calc(100vh - ' +
-      navbarHeight +
-      'px); min-height: calc(var(--vh, 1vh) * 100 - ' +
-      navbarHeight +
-      'px);'
-    "
-    class="bg-base-200"
-  />
+  <div class="wrapper">
+    <NavBar v-model.navbarHeight="navbarHeight" :sticky="this.settings.NAVBAR_STICKY" />
+    <RouterView
+      :style="
+        'min-height: calc(100vh - ' +
+        navbarHeight +
+        'px); min-height: calc(var(--vh, 1vh) * 100 - ' +
+        navbarHeight +
+        'px);'
+      "
+      class="bg-base-200"
+    />
+  </div>
 </template>
 
 <script>

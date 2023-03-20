@@ -1,7 +1,7 @@
 <template>
-  <header>
+  <header :class="[sticky == 'true' ? 'sticky top-0' : '', 'bg-base-100 z-50']">
     <nav>
-      <div class="navbar bg-base-100">
+      <div class="navbar max-w-full">
         <div class="flex-1">
           <RouterLink class="btn btn-ghost normal-case text-base md:text-xl" to="/">{{
             settings.APP_NAME
@@ -88,6 +88,7 @@ export default {
   },
   props: {
     modelValue: Number,
+    sticky: [Boolean, String],
   },
   watch: {
     menuOpen: {

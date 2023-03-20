@@ -1,6 +1,6 @@
 <template>
   <main
-    class="items-center max-w-[100vw] flex justify-center flex-col lg:gap-16 lg:flex-row gap-8 bg-base-200 pb-4 px-6"
+    class="items-center max-w-[100vw] flex justify-center flex-col lg:gap-16 lg:flex-row gap-8 pb-4 px-6"
   >
     <p class="text-center font-extrabold text-9xl lg:text-[14em]">404</p>
     <div class="text-center lg:text-left w-96 max-w-full">

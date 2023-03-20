@@ -1,5 +1,5 @@
 <template>
-  <NavBar v-model.navbarHeight="navbarHeight" />
+  <NavBar v-model.navbarHeight="navbarHeight" :sticky="this.settings.NAVBAR_STICKY" />
   <RouterView
     :style="
       'min-height: calc(100vh - ' +

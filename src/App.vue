@@ -1,16 +1,10 @@
 <template>
   <MainNavbar v-model.navbarHeight="navbarHeight" :sticky="this.settings.NAVBAR_STICKY" />
   <RouterView
-    :style="
-      'min-height: calc(100vh - ' +
-      navbarHeight +
-      'px); min-height: calc(var(--vh, 1vh) * 100 - ' +
-      navbarHeight +
-      'px);'
-    "
+    :style="'min-height: calc(100vh - ' + navbarHeight + 'px - ' + footerHeight + 'px);'"
     class="bg-base-200"
   />
-  <MainFooter href="https://github.com/dhemeira/vue-template" />
+  <MainFooter v-model.footerHeight="footerHeight" href="https://github.com/dhemeira/vue-template" />
 </template>
 
 <script>
@@ -22,6 +16,7 @@ export default {
   data() {
     return {
       navbarHeight: 0,
+      footerHeight: 0,
       settings: appsettings,
     };
   },
@@ -41,7 +36,6 @@ export default {
   mounted() {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
-    _.debo;
     window.addEventListener(
       'resize',
       _.debounce(() => {

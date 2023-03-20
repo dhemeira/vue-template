@@ -4,6 +4,7 @@
       <div>
         <h1 class="font-bold">{{ settings.APP_NAME }}</h1>
         <h2 class="text-xl py-6">This is a template!</h2>
+        <LinkShadow to="/404">Default CTA</LinkShadow>
       </div>
     </div>
   </main>
@@ -11,12 +12,14 @@
 
 <script lang="js">
 import appsettings from '@/appsettings.json';
+import LinkShadow from '../components/LinkShadow.vue';
 export default {
-  data() {
-    return {
-      settings: appsettings,
-    };
-  },
+    data() {
+        return {
+            settings: appsettings,
+        };
+    },
+    components: { LinkShadow }
 };
 </script>
 

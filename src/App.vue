@@ -1,5 +1,5 @@
 <template>
-  <NavBar v-model.navbarHeight="navbarHeight" :sticky="this.settings.NAVBAR_STICKY" />
+  <MainNavbar v-model.navbarHeight="navbarHeight" :sticky="this.settings.NAVBAR_STICKY" />
   <RouterView
     :style="
       'min-height: calc(100vh - ' +
@@ -14,7 +14,7 @@
 
 <script>
 import appsettings from '@/appsettings.json';
-import NavBar from '@/components/NavBar.vue';
+import MainNavbar from '@/components/MainNavbar.vue';
 import _ from 'lodash';
 export default {
   data() {
@@ -24,7 +24,7 @@ export default {
     };
   },
   components: {
-    NavBar,
+    MainNavbar,
   },
   name: 'App',
   watch: {

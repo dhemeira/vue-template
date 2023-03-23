@@ -3,16 +3,17 @@
   variant == 'floating' ? 'sticky top-0 pt-3 px-6' : '',
   shouldHideOnScroll == 'true' ? 'hideonscroll' : '',
     'z-50 transition-[top] duration-300']">
-    <nav class="rounded-lg bg-base-100 shadow-md">
-      <div class="navbar max-w-full">
-        <div class="flex-1">
+    <nav :class="['bg-base-100 shadow-md',
+      variant == 'floating' ? 'max-w-[1376px] mx-auto rounded-lg' : '']">
+      <div :class="[variant != 'floating' ? 'max-w-[1376px] mx-auto' : '', 'navbar max-w-full']">
+        <div class="flex-1 ml-3">
           <RouterLink class="btn btn-ghost normal-case text-base md:text-xl" to="/">{{
             settings.APP_NAME
           }}</RouterLink>
         </div>
         <div class="flex-none">
           <ul id="nav-menu" class="menu menu-horizontal px-1 gap-1 mr-3">
-            <li v-for="menuItem in menuItems">
+            <li v-for="menuItem in     menuItems">
               <RouterLink :to="menuItem.url">{{ menuItem.name }}</RouterLink>
             </li>
           </ul>
@@ -36,7 +37,7 @@
                   {{ settings.APP_NAME }}
                 </div>
                 <div class="px-1 py-1 scroller" style="max-height: calc(100% - 45px)">
-                  <MenuItem v-for="menuItem in menuItems">
+                  <MenuItem v-for="menuItem in     menuItems">
                   <router-link
                     class="hamburger-menu-items group flex items-center rounded-md text-sm font-semibold mt-1 mr-6"
                     :to="menuItem.url">

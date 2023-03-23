@@ -5,7 +5,7 @@
   <div class="wrapper">
     <RouterView :style="
       'min-height: calc(100 * var(--vh) - ' + navbarHeight + 'px - ' + footerHeight + 'px);'
-    " class="px-6 max-w-[1400px] mx-auto" />
+    " class="px-12 max-w-[1400px] mx-auto" />
     <MainFooter v-model.footerHeight="footerHeight" href="https://github.com/dhemeira/vue-template" />
   </div>
 </template>

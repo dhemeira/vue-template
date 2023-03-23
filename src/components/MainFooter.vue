@@ -1,11 +1,18 @@
 <template>
-  <footer class="footer items-center p-4 bg-neutral text-neutral-content grid-flow-col px-6">
-    <div class="items-center grid-flow-col gap-4">
-      <IconHashtag />
-      <p><slot>Made by Dhemeira</slot></p>
-    </div>
-    <div class="grid-flow-col gap-4 place-self-center justify-self-end">
-      <a :href="href" target="_blank"><IconGithub /></a>
+  <footer class="bg-neutral text-neutral-content">
+    <div class="footer items-center py-4 grid-flow-col px-6 max-w-[1400px] mx-auto">
+      <div class="items-center grid-flow-col gap-4">
+        <IconHashtag />
+        <p>
+          <slot>Made by Dhemeira</slot>
+        </p>
+      </div>
+      <div class="grid-flow-col gap-4 place-self-center justify-self-end">
+        <a :href="href" target="_blank">
+          <IconGithub />
+        </a>
+
+      </div>
     </div>
   </footer>
 </template>

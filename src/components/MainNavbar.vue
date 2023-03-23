@@ -1,6 +1,8 @@
 <template>
-  <header
-    :class="[variant == 'sticky' ? 'sticky top-0' : '', variant == 'floating' ? 'sticky top-0 pt-3 px-6' : '', shouldHideOnScroll == 'true' ? 'hideonscroll' : '', 'z-50 transition-[top] duration-300']">
+  <header :class="[variant == 'sticky' ? 'sticky top-0' : '',
+  variant == 'floating' ? 'sticky top-0 pt-3 px-6' : '',
+  shouldHideOnScroll == 'true' ? 'hideonscroll' : '',
+    'z-50 transition-[top] duration-300']">
     <nav class="rounded-lg bg-base-100 shadow-md">
       <div class="navbar max-w-full">
         <div class="flex-1">
@@ -106,8 +108,8 @@ export default {
     this.prevScrollpos = window.pageYOffset;
     window.onscroll = function () {
       var currentScrollPos = window.pageYOffset;
-      if (document.querySelector('.hideonscroll'))
-        document.querySelector('.hideonscroll').style.top = this.prevScrollpos > currentScrollPos ? "0" : "-77px";
+      if (document.querySelector('.hideonscroll.smallscreen'))
+        document.querySelector('.hideonscroll.smallscreen').style.top = this.prevScrollpos > currentScrollPos ? "0" : "-77px";
       this.prevScrollpos = currentScrollPos;
     }
   },

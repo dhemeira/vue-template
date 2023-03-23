@@ -1,6 +1,7 @@
 <template>
-  <header :class="[sticky == 'true' ? 'sticky top-0' : '', 'bg-base-100 z-50']">
-    <nav>
+  <header
+    :class="[variant == 'sticky' ? 'sticky top-0' : '', variant == 'floating' ? 'sticky top-0 pt-3 px-6' : '', 'z-50 transition-[top] duration-300']">
+    <nav class="rounded-lg bg-base-100 shadow-md">
       <div class="navbar max-w-full">
         <div class="flex-1">
           <RouterLink class="btn btn-ghost normal-case text-base md:text-xl" to="/">{{
@@ -8,18 +9,18 @@
           }}</RouterLink>
         </div>
         <div class="flex-none">
-          <ul id="nav-menu" class="menu menu-horizontal px-1 gap-1">
+          <ul id="nav-menu" class="menu menu-horizontal px-1 gap-1 mr-3">
             <li v-for="menuItem in menuItems">
               <RouterLink :to="menuItem.url">{{ menuItem.name }}</RouterLink>
             </li>
           </ul>
 
           <Menu as="div" class="sm:hidden inline-block text-left" v-slot="{ open, close }">
-            <MenuButton class="inline-flex w-full px-2 justify-center rounded-[1.9rem] btn btn-ghost">
-              <label :class="['swap swap-rotate', open ? 'swap-active' : '']">
+            <MenuButton class="inline-flex px-2 justify-center rounded-[1.9rem] btn btn-ghost mr-3">
+              <div :class="['swap swap-rotate', open ? 'swap-active' : '']">
                 <Bars3Icon class="h-8 w-8 swap-off fill-current" aria-hidden="true" />
                 <XMarkIcon class="h-8 w-8 swap-on fill-current" aria-hidden="true" />
-              </label>
+              </div>
               {{ (menuOpen = open) == null ? '' : '' }}
             </MenuButton>
 
@@ -61,6 +62,7 @@ export default {
     return {
       settings: appsettings,
       menuOpen: null,
+      prevScrollpos: 0,
       menuItems: [
         { url: '/', name: 'Home' },
         { url: '/404', name: '404' },
@@ -77,21 +79,22 @@ export default {
   },
   props: {
     modelValue: Number,
-    sticky: [Boolean, String],
+    variant: [Boolean, String],
+    glassmorphic: [Boolean, String],
   },
   watch: {
     menuOpen: {
       handler() {
-        const mainDiv = document.querySelector('.wrapper');
-        if (mainDiv != null) {
-          mainDiv.style.overflow = this.menuOpen
-            ? 'hidden'
-            : window.CSS.supports('overflow', 'overlay')
-              ? 'overlay'
-              : 'auto';
-          mainDiv.style.pointerEvents = this.menuOpen ? 'none' : 'initial';
-          if (this.menuOpen) mainDiv.classList.add('overlay');
-          else mainDiv.classList.remove('overlay');
+        document.querySelector('body').style.overflow = this.menuOpen
+          ? 'hidden'
+          : window.CSS.supports('overflow', 'overlay')
+            ? 'overlay'
+            : 'auto';
+        const wrapperDiv = document.querySelector('.wrapper');
+        if (wrapperDiv != null) {
+          wrapperDiv.style.pointerEvents = this.menuOpen ? 'none' : 'initial';
+          if (this.menuOpen) wrapperDiv.classList.add('overlay');
+          else wrapperDiv.classList.remove('overlay');
         }
       },
       immediate: true,
@@ -100,6 +103,13 @@ export default {
   emits: ['update:modelValue'],
   mounted() {
     this.$emit('update:modelValue', document.querySelector('header').offsetHeight);
+    this.prevScrollpos = window.pageYOffset;
+    window.onscroll = function () {
+      var currentScrollPos = window.pageYOffset;
+      if (document.querySelector('.sticky'))
+        document.querySelector('.sticky').style.top = this.prevScrollpos > currentScrollPos ? "0" : "-77px";
+      this.prevScrollpos = currentScrollPos;
+    }
   },
 };
 </script>
@@ -120,7 +130,7 @@ export default {
 }
 
 .minmaxclamp {
-  width: calc(100% - 64px - 25px);
+  width: calc(100% - 84px - 25px);
   max-width: 100vw;
   min-width: fit-content;
 }
@@ -156,20 +166,6 @@ export default {
 }
 </style>
 <style>
-body {
-  overflow: hidden;
-}
-
-.wrapper {
-  overflow-x: hidden;
-}
-
-@supports (overflow: overlay) {
-  .wrapper {
-    overflow-y: overlay;
-  }
-}
-
 .wrapper.overlay {
   opacity: 0.6;
 }

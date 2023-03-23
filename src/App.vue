@@ -1,10 +1,11 @@
 <template>
-  <MainNavbar v-model.navbarHeight="navbarHeight" :variant="this.settings.NAVBAR_VARIANT"
+  <MainNavbar :class="smallscreen ? 'smallscreen' : (this.settings.NAVBAR_HIDEONLYONPHONE == 'true' ? '' : 'smallscreen')"
+    v-model.navbarHeight="navbarHeight" :variant="this.settings.NAVBAR_VARIANT"
     :shouldHideOnScroll="this.settings.NAVBAR_HIDEONSCROLL" />
   <div class="wrapper">
     <RouterView :style="
       'min-height: calc(100 * var(--vh) - ' + navbarHeight + 'px - ' + footerHeight + 'px);'
-    " class="bg-base-200 px-6" />
+    " class="px-6 max-w-[1400px] mx-auto" />
     <MainFooter v-model.footerHeight="footerHeight" href="https://github.com/dhemeira/vue-template" />
   </div>
 </template>
@@ -20,6 +21,7 @@ export default {
       navbarHeight: 0,
       footerHeight: 0,
       settings: appsettings,
+      smallscreen: false,
     };
   },
   components: {
@@ -36,6 +38,7 @@ export default {
     },
   },
   mounted() {
+    this.smallscreen = window.innerWidth < 640
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
     window.addEventListener(
@@ -43,12 +46,17 @@ export default {
       _.debounce(() => {
         let vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
+        this.smallscreen = window.innerWidth < 640
       }, 250)
     );
   },
 };
 </script>
 <style>
+body {
+  @apply bg-base-200;
+}
+
 @media only screen and (min-width: 640px) {
   :root {
     --scrollbar-color: #b2b8bb;

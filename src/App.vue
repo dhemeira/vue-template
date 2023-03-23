@@ -1,16 +1,10 @@
 <template>
-  <MainNavbar v-model.navbarHeight="navbarHeight" :sticky="this.settings.NAVBAR_STICKY" />
-  <div class="wrapper" :style="'height: calc(100 * var(--vh) - ' + navbarHeight + 'px);'">
-    <RouterView
-      :style="
-        'min-height: calc(100 * var(--vh) - ' + navbarHeight + 'px - ' + footerHeight + 'px);'
-      "
-      class="bg-base-200 px-6"
-    />
-    <MainFooter
-      v-model.footerHeight="footerHeight"
-      href="https://github.com/dhemeira/vue-template"
-    />
+  <MainNavbar v-model.navbarHeight="navbarHeight" :variant="this.settings.NAVBAR_VARIANT" />
+  <div class="wrapper">
+    <RouterView :style="
+      'min-height: calc(100 * var(--vh) - ' + navbarHeight + 'px - ' + footerHeight + 'px);'
+    " class="bg-base-200 px-6" />
+    <MainFooter v-model.footerHeight="footerHeight" href="https://github.com/dhemeira/vue-template" />
   </div>
 </template>
 
@@ -58,18 +52,22 @@ export default {
   :root {
     --scrollbar-color: #b2b8bb;
   }
+
   ::-webkit-scrollbar {
     width: 22px;
   }
+
   ::-webkit-scrollbar-track {
     background-color: transparent;
   }
+
   ::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-color);
     border-radius: 20px;
     border: 7px solid transparent;
     background-clip: content-box;
   }
+
   ::-webkit-scrollbar-thumb:hover {
     background-color: rgb(105, 117, 119);
   }

@@ -1,5 +1,6 @@
 <template>
-  <MainNavbar v-model.navbarHeight="navbarHeight" :variant="this.settings.NAVBAR_VARIANT" />
+  <MainNavbar v-model.navbarHeight="navbarHeight" :variant="this.settings.NAVBAR_VARIANT"
+    :shouldHideOnScroll="this.settings.NAVBAR_HIDEONSCROLL" />
   <div class="wrapper">
     <RouterView :style="
       'min-height: calc(100 * var(--vh) - ' + navbarHeight + 'px - ' + footerHeight + 'px);'

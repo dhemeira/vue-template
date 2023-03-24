@@ -5,7 +5,7 @@
     'z-50 transition-[top] duration-300']">
     <nav :class="['bg-base-100 shadow-md',
       variant == 'floating' ? 'max-w-[1376px] mx-auto rounded-lg' : '']">
-      <div :class="[variant != 'floating' ? 'max-w-[1376px] mx-auto' : '', 'navbar max-w-full']">
+      <div :class="[variant != 'floating' ? 'max-w-[1376px] mx-auto' : '', 'navbar']">
         <div class="flex-1 ml-3">
           <RouterLink class="btn btn-ghost normal-case text-base md:text-xl" to="/">{{
             settings.APP_NAME

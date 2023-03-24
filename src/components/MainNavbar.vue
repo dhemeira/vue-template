@@ -108,12 +108,14 @@ export default {
     this.$emit('update:modelValue', document.querySelector('header').offsetHeight);
     this.prevScrollpos = window.pageYOffset;
     window.onscroll = function () {
-      var currentScrollPos = window.pageYOffset;
-      if (document.querySelector('.hideonscroll.smallscreen'))
+      if (document.querySelector('.hideonscroll.smallscreen')) {
+        var currentScrollPos = window.pageYOffset;
         document.querySelector('.hideonscroll.smallscreen').style.top = this.prevScrollpos > currentScrollPos ? "0" : "-77px";
-      else if (document.querySelector('.hideonscroll'))
+        this.prevScrollpos = currentScrollPos;
+      }
+      else if (document.querySelector('.hideonscroll')) {
         document.querySelector('.hideonscroll').style.top = "0";
-      this.prevScrollpos = currentScrollPos;
+      }
     }
   },
 };

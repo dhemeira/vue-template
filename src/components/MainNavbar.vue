@@ -13,12 +13,12 @@
         </div>
         <div class="flex-none">
           <ul id="nav-menu" class="menu menu-horizontal px-1 gap-1 mr-3">
-            <li v-for="menuItem in     menuItems">
+            <li v-for="menuItem in menuItems" :key="menuItem.url">
               <RouterLink :to="menuItem.url">{{ menuItem.name }}</RouterLink>
             </li>
           </ul>
 
-          <Menu as="div" class="sm:hidden inline-block text-left" v-slot="{ open, close }">
+          <NavMenu as="div" class="sm:hidden inline-block text-left" v-slot="{ open, close }">
             <MenuButton class="inline-flex px-2 justify-center rounded-[1.9rem] btn btn-ghost mr-3">
               <div :class="['swap swap-rotate', open ? 'swap-active' : '']">
                 <Bars3Icon class="h-8 w-8 swap-off fill-current" aria-hidden="true" />
@@ -37,7 +37,7 @@
                   {{ settings.APP_NAME }}
                 </div>
                 <div class="px-1 py-1 scroller" style="max-height: calc(100% - 45px)">
-                  <MenuItem v-for="menuItem in     menuItems">
+                  <MenuItem v-for="menuItem in menuItems" :key="menuItem.url">
                   <router-link
                     class="hamburger-menu-items group flex items-center rounded-md text-sm font-semibold mt-1 mr-6"
                     :to="menuItem.url">
@@ -49,7 +49,7 @@
                 </div>
               </MenuItems>
             </transition>
-          </Menu>
+          </NavMenu>
         </div>
       </div>
     </nav>
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
+import { Menu as NavMenu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/20/solid';
 import appsettings from '@/appsettings.json';
 export default {
@@ -73,7 +73,7 @@ export default {
     };
   },
   components: {
-    Menu,
+    NavMenu,
     MenuButton,
     MenuItems,
     MenuItem,

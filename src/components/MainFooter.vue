@@ -11,7 +11,6 @@
         <a :href="href" target="_blank">
           <IconGithub />
         </a>
-
       </div>
     </div>
   </footer>

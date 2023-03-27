@@ -14,12 +14,12 @@
 import appsettings from '@/appsettings.json';
 import LinkShadow from '../components/LinkShadow.vue';
 export default {
-    data() {
-        return {
-            settings: appsettings,
-        };
-    },
-    components: { LinkShadow }
+  data() {
+    return {
+      settings: appsettings,
+    };
+  },
+  components: { LinkShadow }
 };
 </script>
 

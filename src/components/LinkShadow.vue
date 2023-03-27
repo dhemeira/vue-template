@@ -20,4 +20,5 @@ export default {
 .btn:active {
   transform: translateY(4px) translateX(2px);
   box-shadow: 0 0 0 0 black;
-}</style>
+}
+</style>

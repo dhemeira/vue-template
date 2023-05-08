@@ -1,5 +1,5 @@
 <template>
-  <router-link class="btn btn-primary w-full font-bold" :to="to">
+  <router-link class="btn btn-primary w-full font-bold border-white hover:border-white outline-white" :to="to">
     <slot></slot>
   </router-link>
 </template>
@@ -13,12 +13,12 @@ export default {
 <style scoped>
 .btn {
   transition: all 200ms ease-in-out;
-  box-shadow: 2px 5px 0 0 black;
+  box-shadow: 2px 5px 0 0 white;
 }
 
 .btn:hover,
 .btn:active {
   transform: translateY(4px) translateX(2px);
-  box-shadow: 0 0 0 0 black;
+  box-shadow: 0 0 0 0 white;
 }
 </style>

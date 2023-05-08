@@ -1,55 +1,34 @@
 <template>
-  <header :class="[variant == 'sticky' ? 'sticky top-0' : '',
-  variant == 'floating' ? 'sticky top-0 pt-3 px-6' : '',
-  shouldHideOnScroll == 'true' ? 'hideonscroll' : '',
-    'z-50 transition-[top] duration-300']">
+  <header
+    :class="[settings.NAVBAR_VARIANT == 'sticky' ? 'sticky top-0' : '',
+    settings.NAVBAR_VARIANT == 'floating' ? 'sticky top-0 pt-3 px-6' : '',
+    settings.NAVBAR_HIDEONSCROLL == 'true' ? 'hideonscroll' : '',
+      'z-50 transition-[top] duration-300', smallscreen ? 'smallscreen' : (settings.NAVBAR_HIDEONLYONPHONE == 'true' ? '' : 'smallscreen')]">
     <nav :class="['bg-base-100 shadow-md',
-      variant == 'floating' ? 'max-w-[1376px] mx-auto rounded-lg' : '']">
-      <div :class="[variant != 'floating' ? 'max-w-[1376px] mx-auto' : '', 'navbar']">
+      settings.NAVBAR_VARIANT == 'floating' ? 'max-w-[1376px] mx-auto rounded-lg' : '']">
+      <div :class="[settings.NAVBAR_VARIANT != 'floating' ? 'max-w-[1376px] mx-auto' : '', 'navbar']">
         <div class="flex-1 ml-3">
-          <RouterLink class="btn btn-ghost normal-case text-base md:text-xl" to="/">{{
+          <router-link class="btn btn-ghost normal-case text-base md:text-xl" to="/">{{
             settings.APP_NAME
-          }}</RouterLink>
+          }}</router-link>
         </div>
         <div class="flex-none">
-          <ul id="nav-menu" class="menu menu-horizontal px-1 gap-1 mr-3">
-            <li v-for="menuItem in menuItems" :key="menuItem.url">
-              <RouterLink :to="menuItem.url">{{ menuItem.name }}</RouterLink>
+          <ul id="nav-menu" class="menu menu-horizontal px-1 gap-1 mr-3" data-cy="desktop-menu">
+            <li v-for="menuItem in filteredMenuItems" :key="menuItem.url">
+              <router-link class="px-3" v-if="menuItem.name == 'Profile' || menuItem.name == 'Profil'" :to="menuItem.url"
+                :aria-label="menuItem.name" :title="menuItem.name">
+                <UserCircleIcon v-once class="h-8 w-8" aria-hidden="true" />
+              </router-link>
+              <router-link v-else :to="menuItem.url">{{ menuItem.name }}</router-link>
             </li>
           </ul>
-
-          <NavMenu as="div" class="sm:hidden inline-block text-left" v-slot="{ open, close }">
-            <MenuButton class="inline-flex px-2 justify-center rounded-[1.9rem] btn btn-ghost mr-3">
-              <div :class="['swap swap-rotate', open ? 'swap-active' : '']">
-                <Bars3Icon class="h-8 w-8 swap-off fill-current" aria-hidden="true" />
-                <XMarkIcon class="h-8 w-8 swap-on fill-current" aria-hidden="true" />
-              </div>
-              {{ (menuOpen = open) == null ? '' : '' }}
-            </MenuButton>
-
-            <transition enter-active-class="transition duration-150 ease-out"
-              enter-from-class="transform -translate-x-32 opacity-0" enter-to-class="transform translate-x-0 opacity-100"
-              leave-active-class="transition duration-100 ease-in" leave-from-class="transform translate-x-0 opacity-100"
-              leave-to-class="transform -translate-x-32 opacity-0">
-              <MenuItems
-                class="max-h-full fixed z-[99999] left-0 h-full top-0 minmaxclamp origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div class="flex flex-col h-16 text-base items-start pl-5 justify-center font-semibold">
-                  {{ settings.APP_NAME }}
-                </div>
-                <div class="px-1 py-1 scroller" style="max-height: calc(100% - 45px)">
-                  <MenuItem v-for="menuItem in menuItems" :key="menuItem.url">
-                  <router-link
-                    class="hamburger-menu-items group flex items-center rounded-md text-sm font-semibold mt-1 mr-6"
-                    :to="menuItem.url">
-                    <span class="w-full pl-6 pr-6 py-2" @click="close()" role="link">{{
-                      menuItem.name
-                    }}</span>
-                  </router-link>
-                  </MenuItem>
-                </div>
-              </MenuItems>
-            </transition>
-          </NavMenu>
+          <label v-if="smallscreen" for="my-drawer-3" class="btn btn-square btn-ghost hamburger-open" tabindex="0"
+            role="button" @keypress="open" aria-label="Menü kinyitása">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              class="inline-block w-6 h-6 stroke-current">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </label>
         </div>
       </div>
     </nav>
@@ -57,123 +36,70 @@
 </template>
 
 <script>
-import { Menu as NavMenu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
-import { Bars3Icon, XMarkIcon } from '@heroicons/vue/20/solid';
-import appsettings from '@/appsettings.json';
+import { UserCircleIcon } from '@heroicons/vue/20/solid';
 export default {
   data() {
     return {
-      settings: appsettings,
-      menuOpen: null,
       prevScrollpos: 0,
-      menuItems: [
-        { url: '/', name: 'Home' },
-        { url: '/404', name: '404' },
-      ],
     };
-  },
-  components: {
-    NavMenu,
-    MenuButton,
-    MenuItems,
-    MenuItem,
-    Bars3Icon,
-    XMarkIcon,
   },
   props: {
     modelValue: Number,
     variant: [Boolean, String],
     shouldHideOnScroll: [Boolean, String],
+    smallscreen: Boolean,
+    menuItems: [Array, String],
   },
-  watch: {
-    menuOpen: {
-      handler() {
-        document.querySelector('body').style.overflow = this.menuOpen
-          ? 'hidden'
-          : window.CSS.supports('overflow', 'overlay')
-            ? 'overlay'
-            : 'auto';
-        const wrapperDiv = document.querySelector('.wrapper');
-        if (wrapperDiv != null) {
-          wrapperDiv.style.pointerEvents = this.menuOpen ? 'none' : 'initial';
-          if (this.menuOpen) wrapperDiv.classList.add('overlay');
-          else wrapperDiv.classList.remove('overlay');
-        }
-      },
-      immediate: true,
-    },
-  },
-  emits: ['update:modelValue'],
-  mounted() {
-    this.$emit('update:modelValue', document.querySelector('header').offsetHeight);
-    this.prevScrollpos = window.pageYOffset;
-    window.onscroll = function () {
-      if (document.querySelector('.hideonscroll.smallscreen')) {
-        var currentScrollPos = window.pageYOffset;
-        document.querySelector('.hideonscroll.smallscreen').style.top = this.prevScrollpos > currentScrollPos ? "0" : "-77px";
-        this.prevScrollpos = currentScrollPos;
-      }
-      else if (document.querySelector('.hideonscroll')) {
-        document.querySelector('.hideonscroll').style.top = "0";
-      }
+  emits: ["update:modelValue", "update:hamburgerOpen"],
+  computed: {
+    filteredMenuItems() {
+      return this.menuItems.filter((e) => {
+        //change true to condition for filtering if needed
+        return true;
+      });
     }
   },
+  mounted() {
+    this.$emit("update:modelValue", document.querySelector("header").offsetHeight);
+    this.prevScrollpos = document.querySelector(".drawer-content").scrollTop;
+    document.querySelector(".drawer-content").onscroll = function () {
+      if (document.querySelector(".hideonscroll.smallscreen")) {
+        var currentScrollPos = document.querySelector(".drawer-content").scrollTop;
+        document.querySelector(".hideonscroll.smallscreen").style.top = this.prevScrollpos > currentScrollPos ? "0" : "-77px";
+        this.prevScrollpos = currentScrollPos;
+      }
+      else if (document.querySelector(".hideonscroll")) {
+        document.querySelector(".hideonscroll").style.top = "0";
+      }
+    };
+  },
+  methods: {
+    open(e) {
+      var code = e.which;
+      // 13 = Return
+      if ((code === 13)) {
+        document.querySelector("#my-drawer-3").checked = true;
+        this.$emit("update:hamburgerOpen", true);
+        document.querySelector(".hamburger-close").focus();
+      }
+    },
+  },
+  components: { UserCircleIcon }
 };
 </script>
 
-<style lang="css" scoped>
+<style scoped>
 .router-link-exact-active {
   @apply active;
 }
 
 .navbar .menu li {
-  @apply uppercase font-semibold;
+  @apply font-semibold;
 }
 
-@media (max-width: 639.9px) {
+@media (max-width: 767.9px) {
   #nav-menu {
     @apply hidden;
   }
-}
-
-.minmaxclamp {
-  width: calc(100% - 84px - 25px);
-  max-width: 100vw;
-  min-width: fit-content;
-}
-
-.hamburger-menu-items {
-  border-radius: var(--rounded-btn, 0.5rem);
-}
-
-.hamburger-menu-items.router-link-exact-active {
-  background-color: #d1c1d7;
-  color: #341141;
-}
-
-.hamburger-menu-items:not(.router-link-exact-active):hover {
-  --tw-border-opacity: 0;
-  background-color: hsl(var(--bc) / var(--tw-bg-opacity));
-  --tw-bg-opacity: 0.2;
-}
-
-.minmaxclamp .scroller {
-  overflow-y: auto;
-}
-
-@supports (overflow: overlay) {
-  .minmaxclamp .scroller {
-    overflow-y: overlay;
-  }
-}
-
-.minmaxclamp {
-  -webkit-backdrop-filter: grayscale(1);
-  backdrop-filter: grayscale(1);
-}
-</style>
-<style>
-.wrapper.overlay {
-  opacity: 0.6;
 }
 </style>

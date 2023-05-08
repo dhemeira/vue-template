@@ -9,18 +9,19 @@ const router = createRouter({
         behavior: 'smooth',
       };
     }
+    document.querySelector('.drawer-content').scrollTo(0, 0)
   },
   routes: [
     {
       path: '/',
       name: 'Home',
-      component: () => import('../views/HomeView.vue'),
+      component: () => import('@/views/HomeView.vue'),
       meta: { title: 'Home' },
     },
     {
       name: '404',
       path: '/:pathMatch(.*)*',
-      component: () => import('../views/PageNotFoundView.vue'),
+      component: () => import('@/views/PageNotFoundView.vue'),
       meta: { title: '404' },
     },
   ],

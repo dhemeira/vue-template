@@ -66,14 +66,20 @@ export default {
       var id = this.timeOutId++
       this.messages.push({ id, message: e, type: 'alert-success' })
       setTimeout(() => {
-        this.messages.splice(0, 1)
+        var index = this.messages.findIndex(object => {
+          return object.id == id;
+        });
+        this.messages.splice(index, 1)
       }, 15000)
     },
     openErrorToast(e) {
       var id = this.timeOutId++
       this.messages.push({ id, message: e, type: 'alert-error' })
       setTimeout(() => {
-        this.messages.splice(0, 1)
+        var index = this.messages.findIndex(object => {
+          return object.id == id;
+        });
+        this.messages.splice(index, 1)
       }, 15000)
     },
     debounce(func, time) {

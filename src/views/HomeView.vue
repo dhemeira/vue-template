@@ -1,5 +1,5 @@
 <template>
-  <main class="hero">
+  <div class="hero h-full relative">
     <div class="hero-content text-center max-w-full break-words">
       <div>
         <h1 class="font-bold">{{ settings.APP_NAME }}</h1>
@@ -7,7 +7,7 @@
         <LinkShadow to="/404">Default CTA</LinkShadow>
       </div>
     </div>
-  </main>
+  </div>
 </template>
 
 <script lang="js">

@@ -1,60 +1,123 @@
 <template>
-  <MainNavbar :class="smallscreen ? 'smallscreen' : (this.settings.NAVBAR_HIDEONLYONPHONE == 'true' ? '' : 'smallscreen')"
-    v-model.navbarHeight="navbarHeight" :variant="this.settings.NAVBAR_VARIANT"
-    :shouldHideOnScroll="this.settings.NAVBAR_HIDEONSCROLL" />
-  <div class="wrapper">
-    <RouterView :style="
-      'min-height: calc(100 * var(--vh) - ' + navbarHeight + 'px - ' + footerHeight + 'px);'
-    " class="px-12 max-w-[1400px] mx-auto" />
-    <MainFooter v-model.footerHeight="footerHeight" href="https://github.com/dhemeira/vue-template" />
+  <div class="drawer">
+    <input id="my-drawer-3" type="checkbox" class="drawer-toggle" aria-hidden="true"
+      @change="hamburgerOpen = !hamburgerOpen" />
+    <div :class="['drawer-content flex flex-col', $route.path == '/' ? 'homepage' : '']">
+      <MainNavbar v-model="navbarHeight" :smallscreen="smallscreen" :menuItems="menuItems"
+        @update:hamburgerOpen="(e) => hamburgerOpen = e" />
+      <main>
+        <RouterView @showError="openErrorToast" @showSuccess="openSuccessToast" :style="'min-height: calc(100vh - ' + navbarHeight + 'px); min-height: calc(100dvh - ' + navbarHeight + 'px);'
+          " class="px-2 sm:px-12 max-w-[1400px] mx-auto" />
+      </main>
+      <MainFooter v-model.footerHeight="footerHeight" href="https://github.com/dhemeira/vue-template" />
+    </div>
+    <HamburgerMenu :menuItems="menuItems" :hamburgerOpen="hamburgerOpen"
+      @update:hamburgerOpen="(e) => hamburgerOpen = e" />
+    <div class="absolute top-auto right-0 bottom-0 left-0 w-full pointer-events-none p-4">
+      <TransitionGroup name="fade" tag="ul" class="flex flex-col items-end">
+        <AlertMessage v-for="message in messages" class="pointer-events-auto md:w-max max-w-[calc(100vw-2rem)]"
+          :message="message.message" :type="message.type" :key="message.id" />
+      </TransitionGroup>
+    </div>
   </div>
 </template>
 
 <script>
-import appsettings from '@/appsettings.json';
-import MainNavbar from '@/components/MainNavbar.vue';
-import MainFooter from '@/components/MainFooter.vue';
-import _ from 'lodash';
+import { defineAsyncComponent } from 'vue'
+import PlaceholderNavbar from '@/components/PlaceholderNavbar.vue'
 export default {
   data() {
     return {
       navbarHeight: 0,
       footerHeight: 0,
-      settings: appsettings,
       smallscreen: false,
+      menuItems: [
+        { url: "/", name: "Home" },
+        { url: "/404", name: "404" },
+      ],
+      hamburgerOpen: false,
+      messages: [],
+      timeOutId: 0,
     };
   },
   components: {
-    MainNavbar,
-    MainFooter,
+    MainNavbar: defineAsyncComponent({ loader: () => import("@/components/MainNavbar.vue"), loadingComponent: PlaceholderNavbar }),
+    MainFooter: defineAsyncComponent(() => import("@/components/MainFooter.vue")),
+    HamburgerMenu: defineAsyncComponent(() => import("@/components/HamburgerMenu.vue")),
+    AlertMessage: defineAsyncComponent(() => import("@/components/AlertMessage.vue")),
   },
   name: 'App',
   watch: {
     $route: {
       handler(to) {
         document.title = (to.meta.title ?? this.settings.APP_NAME) + ' | ' + this.settings.APP_NAME;
+        if (to.meta.metaTags) {
+          to.meta.metaTags.forEach(metaTag => {
+            if (metaTag.name) document.querySelector(`meta[name="${metaTag.name}"]`).setAttribute("content", metaTag.content);
+            if (metaTag.property) document.querySelector(`meta[property="${metaTag.property}"]`).setAttribute("content", metaTag.content);
+          });
+        }
       },
       immediate: true,
     },
   },
-  mounted() {
-    this.smallscreen = window.innerWidth < 640
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  methods: {
+    openSuccessToast(e) {
+      var id = this.timeOutId++
+      this.messages.push({ id, message: e, type: 'alert-success' })
+      setTimeout(() => {
+        this.messages.splice(0, 1)
+      }, 15000)
+    },
+    openErrorToast(e) {
+      var id = this.timeOutId++
+      this.messages.push({ id, message: e, type: 'alert-error' })
+      setTimeout(() => {
+        this.messages.splice(0, 1)
+      }, 15000)
+    },
+    debounce(func, time) {
+      var timer;
+      return function (event) {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(func, time, event);
+      };
+    }
+  },
+  async mounted() {
+    this.smallscreen = window.innerWidth < 768
     window.addEventListener(
       'resize',
-      _.debounce(() => {
-        let vh = window.innerHeight * 0.01;
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
-        this.smallscreen = window.innerWidth < 640
-      }, 250)
+      this.debounce(() => {
+        this.smallscreen = window.innerWidth < 768
+      }, 500)
     );
   },
 };
 </script>
 <style>
+/* 1. declare transition */
+.fade-move,
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+/* 2. declare enter from and leave to state */
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translate(-30px, 0);
+}
+
 body {
   @apply bg-base-200;
+}
+
+@supports (overflow: overlay) {
+  .drawer-content {
+    overflow: overlay !important;
+  }
 }
 
 @media only screen and (min-width: 640px) {

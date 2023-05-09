@@ -21,16 +21,11 @@ import IconGithub from '@/components/IconGithub.vue';
 import IconHashtag from '@/components/IconHashtag.vue';
 export default {
   props: {
-    modelValue: Number,
     href: String,
   },
   components: {
     IconGithub,
     IconHashtag,
-  },
-  emits: ['update:modelValue'],
-  mounted() {
-    this.$emit('update:modelValue', document.querySelector('footer').offsetHeight);
   },
 };
 </script>

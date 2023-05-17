@@ -4,16 +4,16 @@
       <div>
         <h1 class="font-bold">{{ settings.APP_NAME }}</h1>
         <h2 class="text-xl py-6">This is a template!</h2>
-        <LinkShadow to="/404">Default CTA</LinkShadow>
+        <LinkShadowButton to="/404" color="black">Default CTA</LinkShadowButton>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="js">
-import LinkShadow from '@/components/LinkShadow.vue';
+import LinkShadowButton from '@/components/LinkShadowButton.vue';
 export default {
-  components: { LinkShadow }
+  components: { LinkShadowButton }
 };
 </script>
 

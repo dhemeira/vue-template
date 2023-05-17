@@ -1,16 +1,16 @@
 <template>
   <footer class="bg-base-100 text-base-content">
-    <MainFooterTop />
-    <MainFooterBottom :href="href">
+    <FooterDefaultTop />
+    <FooterDefaultBottom :href="href">
       <span>© 2023 {{ currentYear != 2023 ? ' - ' + currentYear : '' }}</span><span
         class="max-sm:hidden">|</span><span>Made by Dhemeira</span>
-    </MainFooterBottom>
+    </FooterDefaultBottom>
   </footer>
 </template>
 
 <script>
-import MainFooterTop from '@/components/MainFooterTop.vue';
-import MainFooterBottom from '@/components/MainFooterBottom.vue';
+import FooterDefaultTop from '@/components/FooterDefaultTop.vue';
+import FooterDefaultBottom from '@/components/FooterDefaultBottom.vue';
 export default {
   computed: {
     currentYear() {
@@ -24,8 +24,8 @@ export default {
     },
   },
   components: {
-    MainFooterBottom,
-    MainFooterTop
+    FooterDefaultBottom,
+    FooterDefaultTop
   },
 };
 </script>

@@ -2,14 +2,15 @@
   <div class="drawer">
     <input id="my-drawer-3" type="checkbox" class="drawer-toggle" aria-hidden="true"
       @change="hamburgerOpen = !hamburgerOpen" />
-    <div :class="['drawer-content flex flex-col', $route.path == '/' ? 'homepage' : '']">
+    <div class="drawer-content flex flex-col">
       <MainNavbar v-model="navbarHeight" :smallscreen="smallscreen" :menuItems="menuItems"
         @update:hamburgerOpen="(e) => hamburgerOpen = e" />
       <main>
-        <RouterView @showError="openErrorToast" @showSuccess="openSuccessToast" :style="'min-height: calc(100vh - ' + navbarHeight + 'px); min-height: calc(100dvh - ' + navbarHeight + 'px);'
-          " class="px-2 sm:px-12 max-w-[1400px] mx-auto" />
+        <RouterView @showError="openErrorToast" @showSuccess="openSuccessToast"
+          :style="'min-height: calc(100vh - ' + navbarHeight + 'px); min-height: calc(100dvh - ' + navbarHeight + 'px);'"
+          class="px-6 sm:px-12 max-w-[1400px] mx-auto" />
       </main>
-      <MainFooter v-model.footerHeight="footerHeight" href="https://github.com/dhemeira/vue-template" />
+      <MainFooter href="https://github.com/dhemeira/vue-template" />
     </div>
     <HamburgerMenu :menuItems="menuItems" :hamburgerOpen="hamburgerOpen"
       @update:hamburgerOpen="(e) => hamburgerOpen = e" />
@@ -29,7 +30,6 @@ export default {
   data() {
     return {
       navbarHeight: 0,
-      footerHeight: 0,
       smallscreen: false,
       menuItems: [
         { url: "/", name: "Home" },
@@ -90,12 +90,12 @@ export default {
       };
     }
   },
-  async mounted() {
-    this.smallscreen = window.innerWidth < 768
+  mounted() {
+    this.smallscreen = window.innerWidth < 640
     window.addEventListener(
       'resize',
       this.debounce(() => {
-        this.smallscreen = window.innerWidth < 768
+        this.smallscreen = window.innerWidth < 640
       }, 500)
     );
   },

@@ -11,26 +11,20 @@
 </template>
 
 <script lang="js">
-import appsettings from '@/appsettings.json';
-import LinkShadow from '../components/LinkShadow.vue';
+import LinkShadow from '@/components/LinkShadow.vue';
 export default {
-  data() {
-    return {
-      settings: appsettings,
-    };
-  },
   components: { LinkShadow }
 };
 </script>
 
 <style scoped>
 h1 {
-  font-size: clamp(2rem, 1.286rem + 3.571vw, 4.5rem);
+  font-size: clamp(2.25rem, 1.192rem + 4.231vw, 5rem);
   line-height: 1;
 }
 
 h2 {
-  font-size: clamp(1.125rem, 1.089rem + 0.179vw, 1.25rem);
+  font-size: clamp(1rem, 0.904rem + 0.385vw, 1.25rem);
   line-height: 1.75rem;
 }
 </style>

@@ -1,36 +1,31 @@
 <template>
-  <footer class="bg-neutral text-neutral-content">
-    <div class="footer items-center py-4 grid-flow-col px-6 max-w-[1400px] mx-auto">
-      <div class="items-center grid-flow-col gap-4">
-        <IconHashtag v-once />
-        <p>
-          <slot>Made by Dhemeira</slot>
-        </p>
-      </div>
-      <div class="grid-flow-col gap-4 place-self-center justify-self-end">
-        <a :href="href" target="_blank" aria-label="Github link">
-          <IconGithub v-once />
-        </a>
-      </div>
-    </div>
+  <footer class="bg-base-100 text-base-content">
+    <MainFooterTop />
+    <MainFooterBottom :href="href">
+      <span>© 2023 {{ currentYear != 2023 ? ' - ' + currentYear : '' }}</span><span
+        class="max-sm:hidden">|</span><span>Made by Dhemeira</span>
+    </MainFooterBottom>
   </footer>
 </template>
 
 <script>
-import IconGithub from '@/components/IconGithub.vue';
-import IconHashtag from '@/components/IconHashtag.vue';
+import MainFooterTop from '@/components/MainFooterTop.vue';
+import MainFooterBottom from '@/components/MainFooterBottom.vue';
 export default {
+  computed: {
+    currentYear() {
+      return new Date().getFullYear();
+    },
+  },
   props: {
-    modelValue: Number,
-    href: String,
+    href: {
+      type: String,
+      required: true,
+    },
   },
   components: {
-    IconGithub,
-    IconHashtag,
-  },
-  emits: ['update:modelValue'],
-  mounted() {
-    this.$emit('update:modelValue', document.querySelector('footer').offsetHeight);
+    MainFooterBottom,
+    MainFooterTop
   },
 };
 </script>

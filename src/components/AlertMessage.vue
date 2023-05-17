@@ -10,10 +10,10 @@
   </div>
 </template>
 <script>
-import IconError from '@/components/IconError.vue';
-import IconWarning from '@/components/IconWarning.vue';
-import IconInfo from '@/components/IconInfo.vue';
-import IconSuccess from '@/components/IconSuccess.vue';
+import IconError from '@/components/icons/IconError.vue';
+import IconWarning from '@/components/icons/IconWarning.vue';
+import IconInfo from '@/components/icons/IconInfo.vue';
+import IconSuccess from '@/components/icons/IconSuccess.vue';
 export default {
   props: {
     message: { default: "Siker" },

@@ -3,16 +3,16 @@
     <input id="my-drawer-3" type="checkbox" class="drawer-toggle" aria-hidden="true"
       @change="hamburgerOpen = !hamburgerOpen" />
     <div class="drawer-content flex flex-col">
-      <MainNavbar v-model="navbarHeight" :smallscreen="smallscreen" :menuItems="menuItems"
+      <NavbarDefault v-model="navbarHeight" :smallscreen="smallscreen" :menuItems="menuItems"
         @update:hamburgerOpen="(e) => hamburgerOpen = e" />
       <main>
         <RouterView @showError="openErrorToast" @showSuccess="openSuccessToast"
           :style="'min-height: calc(100vh - ' + navbarHeight + 'px); min-height: calc(100dvh - ' + navbarHeight + 'px);'"
           class="px-6 sm:px-12 max-w-[1400px] mx-auto" />
       </main>
-      <MainFooter href="https://github.com/dhemeira/vue-template" />
+      <FooterDefault href="https://github.com/dhemeira/vue-template" />
     </div>
-    <HamburgerMenu :menuItems="menuItems" :hamburgerOpen="hamburgerOpen"
+    <NavbarHamburgerMenu :menuItems="menuItems" :hamburgerOpen="hamburgerOpen"
       @update:hamburgerOpen="(e) => hamburgerOpen = e" />
     <div class="absolute top-auto right-0 bottom-0 left-0 w-full pointer-events-none p-4">
       <TransitionGroup name="fade" tag="ul" class="flex flex-col items-end">
@@ -25,7 +25,7 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
-import PlaceholderNavbar from '@/components/PlaceholderNavbar.vue'
+import PlaceholderNavbar from '@/components/NavbarPlaceholder.vue'
 export default {
   data() {
     return {
@@ -41,9 +41,9 @@ export default {
     };
   },
   components: {
-    MainNavbar: defineAsyncComponent({ loader: () => import("@/components/MainNavbar.vue"), loadingComponent: PlaceholderNavbar }),
-    MainFooter: defineAsyncComponent(() => import("@/components/MainFooter.vue")),
-    HamburgerMenu: defineAsyncComponent(() => import("@/components/HamburgerMenu.vue")),
+    NavbarDefault: defineAsyncComponent({ loader: () => import("@/components/NavbarDefault.vue"), loadingComponent: PlaceholderNavbar }),
+    FooterDefault: defineAsyncComponent(() => import("@/components/FooterDefault.vue")),
+    NavbarHamburgerMenu: defineAsyncComponent(() => import("@/components/NavbarHamburgerMenu.vue")),
     AlertMessage: defineAsyncComponent(() => import("@/components/AlertMessage.vue")),
   },
   name: 'App',

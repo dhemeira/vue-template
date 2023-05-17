@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import IconGithub from '@/components/IconGithub.vue';
+import IconGithub from '@/components/icons/IconGithub.vue';
 export default {
   props: {
     href: String,

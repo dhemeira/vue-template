@@ -8,14 +8,14 @@
           Sorry about that! Please visit our hompage to get where you need to go.
         </p>
       </div>
-      <LinkShadow to="/">Back to Homepage</LinkShadow>
+      <LinkShadowButton to="/" color="black">Back to Homepage</LinkShadowButton>
     </div>
   </div>
 </template>
 <script>
-import LinkShadow from '@/components/LinkShadow.vue';
+import LinkShadowButton from '@/components/LinkShadowButton.vue';
 export default {
-  components: { LinkShadow },
+  components: { LinkShadowButton },
   computed: {
     statusCode() {
       var statusEl = document.querySelector('#app')

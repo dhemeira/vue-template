@@ -19,9 +19,9 @@ const router = createRouter({
       meta: { title: 'Home' },
     },
     {
-      name: '404',
+      name: 'Error',
       path: '/:pathMatch(.*)*',
-      component: () => import('@/views/PageNotFoundView.vue'),
+      component: () => import('@/views/ErrorView.vue'),
       meta: { title: '404' },
     },
   ],

@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import FooterDefaultTop from '@/components/FooterDefaultTop.vue';
-import FooterDefaultBottom from '@/components/FooterDefaultBottom.vue';
+import FooterDefaultTop from '@/components/footer/FooterDefaultTop.vue';
+import FooterDefaultBottom from '@/components/footer/FooterDefaultBottom.vue';
 export default {
   computed: {
     currentYear() {

@@ -41,9 +41,9 @@ export default {
     };
   },
   components: {
-    NavbarDefault: defineAsyncComponent({ loader: () => import("@/components/NavbarDefault.vue"), loadingComponent: PlaceholderNavbar }),
-    FooterDefault: defineAsyncComponent(() => import("@/components/FooterDefault.vue")),
-    NavbarHamburgerMenu: defineAsyncComponent(() => import("@/components/NavbarHamburgerMenu.vue")),
+    NavbarDefault: defineAsyncComponent({ loader: () => import("@/components/navbar/NavbarDefault.vue"), loadingComponent: PlaceholderNavbar }),
+    FooterDefault: defineAsyncComponent(() => import("@/components/footer/FooterDefault.vue")),
+    NavbarHamburgerMenu: defineAsyncComponent(() => import("@/components/navbar/NavbarHamburgerMenu.vue")),
     AlertMessage: defineAsyncComponent(() => import("@/components/AlertMessage.vue")),
   },
   name: 'App',

@@ -22,7 +22,7 @@ const router = createRouter({
       name: 'Error',
       path: '/:pathMatch(.*)*',
       component: () => import('@/views/ErrorView.vue'),
-      meta: { title: '404' },
+      meta: { title: 'Error' },
     },
   ],
 });

@@ -28,7 +28,7 @@
 import { XMarkIcon } from '@heroicons/vue/20/solid';
 export default {
   props: ['menuItems', 'hamburgerOpen'],
-  emits: ['update:hamburgerOpen'],
+  emits: ['update-hamburger-open'],
   computed: {
     filteredMenuItems() {
       return this.menuItems.filter((e) => {
@@ -40,7 +40,7 @@ export default {
   methods: {
     close() {
       document.querySelector("#my-drawer-3").checked = false
-      this.$emit('update:hamburgerOpen', false);
+      this.$emit('update-hamburger-open', false);
     },
     closeKb(e) {
       var code = e.which;

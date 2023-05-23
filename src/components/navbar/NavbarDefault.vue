@@ -44,13 +44,10 @@ export default {
     };
   },
   props: {
-    modelValue: Number,
-    variant: [Boolean, String],
-    shouldHideOnScroll: [Boolean, String],
     smallscreen: Boolean,
     menuItems: [Array, String],
   },
-  emits: ["update:modelValue", "update:hamburgerOpen"],
+  emits: ["update-navbar-height", 'update-hamburger-open'],
   computed: {
     filteredMenuItems() {
       return this.menuItems.filter((e) => {
@@ -60,7 +57,7 @@ export default {
     }
   },
   mounted() {
-    this.$emit("update:modelValue", document.querySelector("header").offsetHeight);
+    this.$emit("update-navbar-height", document.querySelector("header").offsetHeight);
     this.prevScrollpos = document.querySelector(".drawer-content").scrollTop;
     document.querySelector(".drawer-content").onscroll = function () {
       if (document.querySelector(".hideonscroll.smallscreen")) {
@@ -79,7 +76,7 @@ export default {
       // 13 = Return
       if ((code === 13)) {
         document.querySelector("#my-drawer-3").checked = true;
-        this.$emit("update:hamburgerOpen", true);
+        this.$emit("update-hamburger-open", true);
         document.querySelector(".hamburger-close").focus();
       }
     },

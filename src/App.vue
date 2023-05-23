@@ -3,17 +3,17 @@
     <input id="my-drawer-3" type="checkbox" class="drawer-toggle" aria-hidden="true"
       @change="hamburgerOpen = !hamburgerOpen" />
     <div class="drawer-content flex flex-col">
-      <NavbarDefault v-model="navbarHeight" :smallscreen="smallscreen" :menuItems="menuItems"
-        @update:hamburgerOpen="(e) => hamburgerOpen = e" />
+      <NavbarDefault @update-navbar-height="(e) => navbarHeight = e" :smallscreen="smallscreen" :menuItems="menuItems"
+        @update-hamburger-open="(e) => hamburgerOpen = e" />
       <main>
-        <RouterView @showError="openErrorToast" @showSuccess="openSuccessToast"
+        <RouterView @show-error="openErrorToast" @show-success="openSuccessToast"
           :style="'min-height: calc(100vh - ' + navbarHeight + 'px); min-height: calc(100dvh - ' + navbarHeight + 'px);'"
           class="px-6 sm:px-12 max-w-[1400px] mx-auto" />
       </main>
       <FooterDefault href="https://github.com/dhemeira/vue-template" />
     </div>
     <NavbarHamburgerMenu :menuItems="menuItems" :hamburgerOpen="hamburgerOpen"
-      @update:hamburgerOpen="(e) => hamburgerOpen = e" />
+      @update-hamburger-open="(e) => hamburgerOpen = e" />
     <div class="absolute top-auto right-0 bottom-0 left-0 w-full pointer-events-none p-4">
       <TransitionGroup name="fade" tag="ul" class="flex flex-col items-end">
         <AlertMessage v-for="message in messages" class="pointer-events-auto md:w-max max-w-[calc(100vw-2rem)]"
@@ -25,7 +25,7 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
-import PlaceholderNavbar from '@/components/NavbarPlaceholder.vue'
+import NavbarPlaceholder from '@/components/navbar/NavbarPlaceholder.vue'
 export default {
   data() {
     return {
@@ -41,7 +41,7 @@ export default {
     };
   },
   components: {
-    NavbarDefault: defineAsyncComponent({ loader: () => import("@/components/navbar/NavbarDefault.vue"), loadingComponent: PlaceholderNavbar }),
+    NavbarDefault: defineAsyncComponent({ loader: () => import("@/components/navbar/NavbarDefault.vue"), loadingComponent: NavbarPlaceholder }),
     FooterDefault: defineAsyncComponent(() => import("@/components/footer/FooterDefault.vue")),
     NavbarHamburgerMenu: defineAsyncComponent(() => import("@/components/navbar/NavbarHamburgerMenu.vue")),
     AlertMessage: defineAsyncComponent(() => import("@/components/AlertMessage.vue")),
@@ -102,14 +102,12 @@ export default {
 };
 </script>
 <style>
-/* 1. declare transition */
 .fade-move,
 .fade-enter-active,
 .fade-leave-active {
   transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
 }
 
-/* 2. declare enter from and leave to state */
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;

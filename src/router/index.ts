@@ -9,7 +9,7 @@ const router = createRouter({
         behavior: 'smooth',
       };
     }
-    document.querySelector('.drawer-content').scrollTo(0, 0)
+    (document.querySelector('.drawer-content') as HTMLElement).scrollTo(0, 0);
   },
   routes: [
     {

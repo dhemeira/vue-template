@@ -1,13 +1,16 @@
 <template>
-  <router-link class="btn btn-primary w-full font-bold" :to="to">
+  <router-link
+    class="btn btn-primary w-full font-bold"
+    :to="to"
+  >
     <slot></slot>
   </router-link>
 </template>
-<script>
+<script lang="ts">
 export default {
   props: {
     to: { type: [String, Object], default: '/' },
-    color: { type: String, default: 'black' }
+    color: { type: String, default: 'black' },
   },
 };
 </script>
